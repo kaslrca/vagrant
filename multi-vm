@@ -1,0 +1,25 @@
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+
+config.vm.define :app do |app_config|
+	app_config.vm.provider "virtualbox" do |vb|
+		vb.customize ["modifyvm", :id, "--name", "app", "--memory", "512"]
+	end
+	
+	app_config.vm.box = "ubuntu/trusty64"
+	app_config.vm.host_name = "app"
+	app_config.vm.network :private_network, ip: "192.168.13.10"
+end
+
+config.vm.define :db do |db_config|
+	db_config.vm.provider "virtualbox" do |vb|
+		vb.customize ["modifyvm", :id, "--name", "db", "--memory", "512"]
+	end
+	
+	db_config.vm.box = "ubuntu/trusty64"
+	db_config.vm.host_name = "db"
+	db_config.vm.network :private_network, ip: "192.168.13.11"
+end
+
+end
